@@ -20,6 +20,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // Set unique as true, we can not put the same into db
     @Column(length = 128, nullable = false, unique = true)
     private String email;
 

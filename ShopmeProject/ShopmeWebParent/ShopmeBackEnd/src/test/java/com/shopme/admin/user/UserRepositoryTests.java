@@ -90,4 +90,14 @@ public class UserRepositoryTests {
         repo.deleteById(userId);
 
     }
+
+    @Test
+    public void testGetUserByEmail() {
+        String email1 = "avb@gmail.com";
+        String email2 = "li.junce@northeastern.edu";
+        User user1 = repo.getUserByEmail(email1);
+        User user2 = repo.getUserByEmail(email2);
+        assertThat(user1).isNull();
+        assertThat(user2).isNotNull();
+    }
 }
