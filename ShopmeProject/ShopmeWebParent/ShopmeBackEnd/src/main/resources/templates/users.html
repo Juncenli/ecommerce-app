@@ -7,6 +7,10 @@
 	<title>Home - Shopme Admin</title>
 
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<!--linked with fontawesome (local file)-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}"/>
+	<!--linked with style.css to change color-->
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
 	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" ></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" ></script>
 </head>
@@ -87,14 +91,18 @@
 			<tbody>
 			<tr th:each="user : ${listUsers}">
 				<td>[[${user.id}]]</td>
-				<td></td>
+				<td><i class="fa-solid fa-image-portrait fa-3x icon-gray"></i></td>
 				<td>[[${user.email}]]</td>
 				<td>[[${user.firstName}]]</td>
 				<td>[[${user.lastName}]]</td>
 				<td>[[${user.roles}]]</td>
-				<td>[[${user.enabled}]]</td>
+				<!--thymeleaf if syntax-->
 				<td>
-					Edit &nbsp; Delete
+					<i th:if="${user.enabled == true}" class="fa-sharp fa-solid fa-circle-check fa-2x icon-blue"></i>
+					<i th:if="${user.enabled == false}" class="fa-sharp fa-solid fa-circle-check fa-2x icon-gray"></i>
+				</td>
+				<td>
+					<i class="fa-solid fa-pen-to-square fa-2x icon-green"></i> &nbsp; <i class="fa-solid fa-trash-can fa-2x icon-red"></i>
 				</td>
 			</tr>
 			</tbody>
