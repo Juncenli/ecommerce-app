@@ -64,4 +64,24 @@ public class UserController {
             return "redirect:/users";
         }
     }
+
+    @GetMapping("/users/delete/{id}")
+    public String deleteUser(@PathVariable(name = "id") Integer id,
+                             Model model,
+                             RedirectAttributes redirectAttributes) {
+        try {
+            service.deleteById(id);
+            redirectAttributes.addFlashAttribute("message",
+                    "The use ID " + id + " has been deleted successfully");
+        } catch (UserNotFoundException ex) {
+            /*
+                把message传给users.html中的
+                <div th:if="${message != null}" class="alert alert-success text-center">
+            		[[${message}]]
+            	</div>
+            */
+            redirectAttributes.addFlashAttribute("message", ex.getMessage());
+        }
+        return "redirect:/users";
+    }
 }

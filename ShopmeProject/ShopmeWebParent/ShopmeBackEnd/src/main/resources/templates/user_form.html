@@ -137,7 +137,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="modalTitle">Warning</h4>
+            <h4 class="modal-title" id="modalTitle"></h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
 
@@ -190,7 +190,8 @@
       }
 
       function showModalDialog(title, message) {
-        $("#modalTitle").text(title); <!--link with corresponding bootstrap-->
+        <!-- class="modal-title" id="modalTitle" -->
+        $("#modalTitle").text(title); <!--link with corresponding bootstrap -->
         $("#modalBody").text(message);
         $("#modalDialog").modal();
       }

@@ -70,6 +70,7 @@
 		<a th:href="@{/users/new}">Create New User</a>
 	</div>
 
+	<!--小弹窗-->
 	<div th:if="${message != null}" class="alert alert-success text-center">
 		[[${message}]]
 	</div>
@@ -104,16 +105,60 @@
 				<td>
 					<a class="fa-solid fa-pen-to-square fa-2x icon-green" th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
 					&nbsp;
-					<i class="fa-solid fa-trash-can fa-2x icon-red"></i>
+					<a class="fa-solid fa-trash-can fa-2x icon-red link-delete"
+					   th:href="@{'/users/delete/' + ${user.id}}"
+					   th:userId="${user.id}"
+					   title="Delete this user">
+					</a>
 				</td>
 			</tr>
 			</tbody>
 		</table>
 	</div>
 
+	<!--弹窗-->
+	<div class="modal fade text-center" id="confirmModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Delete Confirmation</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body">
+					<span id="confirmText"></span>
+				</div>
+
+				<div class="modal-footer">
+
+					<a class="btn btn-success" href="" id="yesButton">Yes</a>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<div class="text-center">
 		<p>Shopme Control Panel - Copyright &copy; Shopme</p>
 	</div>
+
+	<!--点击delete之后 会进行下面的js code-->
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$(".link-delete").on("click", function (e) {
+				e.preventDefault();
+				link = $(this);
+				// alert($(this).attr("href"));
+				// 把link中的attribute useId 传给 userId
+				userId = link.attr("userId");
+				// 把link中的attribute href 传给 href， href传给yesButton
+				$("#yesButton").attr("href", link.attr("href"));
+				$("#confirmText").text("Are you sure you want to delete this user ID " + userId + "?");
+				$("#confirmModal").modal();
+			});
+		});
+	</script>
 
 </div>
 </body>
