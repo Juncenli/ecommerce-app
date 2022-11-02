@@ -136,11 +136,16 @@
             <!--
                 It is used to pass data to the server when the form is submitted.
                 The data is in the value attribute. As it is hidden the user can't see it, but the Server gets extra information about the form.
+
+
+                That hidden field is needed in case editing user.
+                The photos name will be in the form and won't get lost when the user's details are saved (if no change to existing photo).
             -->
             <input type="hidden" th:field="*{photos}" />
             <!-- class="mb-2" set the preview pic size-->
             <input type="file" id="fileImage" name="image" accept="image/png, image/jpeg"
                    class="mb-2" />
+            <!--show an image-->
             <img id="thumbnail" alt="Photos preview" th:src="@{${user.photosImagePath}}"
                  class="img-fluid" />
           </div>

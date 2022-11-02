@@ -1,10 +1,12 @@
 package com.shopme.admin.user;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.shopme.admin.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -25,8 +27,39 @@ public class UserController {
     private UserService service;
 
     @GetMapping("/users")
-    public String listAll(Model model) {
-        List<User> listUsers = service.listAll();
+    public String listFirstPage(Model model) {
+        return listByPage(1, model);
+    }
+
+    @GetMapping("/users/page/{pageNum}")
+    public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model) {
+        // edge case -> pageNum is invalid
+        if (pageNum < 0) {
+            throw new RuntimeException("Invalid page number, please check it again if it is more than 0");
+        }
+
+        Page<User> page = service.listByPage(pageNum);
+        List<User> listUsers = page.getContent();
+        long startCount = (pageNum - 1) * UserService.USERS_PER_PAGE + 1;
+
+        // edge case -> pageNum is invalid
+        if (startCount > page.getTotalElements()) {
+            throw new RuntimeException("Invalid page number, please check it again if it is less than the totalPages: " + page.getTotalPages());
+        }
+
+        long endCount = startCount + UserService.USERS_PER_PAGE - 1;
+
+        // 若最后一页的个数小于4
+        if (endCount > page.getTotalElements()) {
+            endCount = page.getTotalElements();
+        }
+
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("startCount", startCount);
+        model.addAttribute("endCount", endCount);
+        model.addAttribute("totalItems", page.getTotalElements());
+        // show users in specific page
         model.addAttribute("listUsers", listUsers);
 
         return "users";
