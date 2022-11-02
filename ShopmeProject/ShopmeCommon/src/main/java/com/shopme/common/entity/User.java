@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "users")
@@ -20,7 +21,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // Set unique as true, we can not put the same into db
     @Column(length = 128, nullable = false, unique = true)
     private String email;
 
@@ -38,7 +38,6 @@ public class User {
 
     private boolean enabled;
 
-    // 两个table组合，形成users_roles
     @ManyToMany
     @JoinTable(
             name = "users_roles",
@@ -130,6 +129,13 @@ public class User {
     public String toString() {
         return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
                 + ", roles=" + roles + "]";
+    }
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (id == null || photos == null) return "/images/default-user.png";
+
+        return "/user-photos/" + this.id + "/" + this.photos;
     }
 
 
