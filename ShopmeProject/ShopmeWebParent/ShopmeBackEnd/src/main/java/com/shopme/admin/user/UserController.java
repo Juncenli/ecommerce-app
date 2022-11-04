@@ -7,6 +7,7 @@ import java.util.List;
 import com.shopme.admin.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -28,17 +29,26 @@ public class UserController {
 
     @GetMapping("/users")
     public String listFirstPage(Model model) {
-        return listByPage(1, model);
+        // 默认第一页按照first name ascending
+        return listByPage(1, model, "firstName", "asc");
     }
 
+
     @GetMapping("/users/page/{pageNum}")
-    public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model) {
+    // @PathVariable -> to bind method parameters to an url path variable via a named parameter
+    // @RequestParam Annotation to bind method parameters to a query via a named parameter. -> http://localhost:8080/ShopmeAdmin/users/page/1?sortField=email&sortDir=asc
+    // We don't need to use @Param in handler method. The @Param is used in queries of repository interfaces.
+    // If same name -> @RequestParam String sortField == @RequestParam(name = "sortField") String sortField
+    // Note that the @RequestParam annotation is optional if the data type is String or Integer.
+    public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model,
+             @RequestParam String sortField, String sortDir) {
         // edge case -> pageNum is invalid
         if (pageNum < 0) {
             throw new RuntimeException("Invalid page number, please check it again if it is more than 0");
         }
-
-        Page<User> page = service.listByPage(pageNum);
+         System.out.println("Sort Field: " + sortField);
+         System.out.println("Sort Order: " + sortDir);
+        Page<User> page = service.listByPage(pageNum, sortField, sortDir);
         List<User> listUsers = page.getContent();
         long startCount = (pageNum - 1) * UserService.USERS_PER_PAGE + 1;
 
@@ -54,6 +64,7 @@ public class UserController {
             endCount = page.getTotalElements();
         }
 
+        String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("startCount", startCount);
@@ -61,7 +72,9 @@ public class UserController {
         model.addAttribute("totalItems", page.getTotalElements());
         // show users in specific page
         model.addAttribute("listUsers", listUsers);
-
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", reverseSortDir);
         return "users";
     }
 
