@@ -30,7 +30,7 @@ public class UserController {
     @GetMapping("/users")
     public String listFirstPage(Model model) {
         // 默认第一页按照first name ascending
-        return listByPage(1, model, "firstName", "asc");
+        return listByPage(1, model, "firstName", "asc", null);
     }
 
 
@@ -41,21 +41,23 @@ public class UserController {
     // If same name -> @RequestParam String sortField == @RequestParam(name = "sortField") String sortField
     // Note that the @RequestParam annotation is optional if the data type is String or Integer.
     public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model,
-             @RequestParam String sortField, String sortDir) {
+             @RequestParam String sortField, String sortDir, String keyword) {
         // edge case -> pageNum is invalid
-        if (pageNum < 0) {
-            throw new RuntimeException("Invalid page number, please check it again if it is more than 0");
-        }
+//        if (pageNum < 0) {
+//            throw new RuntimeException("Invalid page number, please check it again if it is more than 0");
+//        }
          System.out.println("Sort Field: " + sortField);
          System.out.println("Sort Order: " + sortDir);
-        Page<User> page = service.listByPage(pageNum, sortField, sortDir);
+        Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyword);
         List<User> listUsers = page.getContent();
         long startCount = (pageNum - 1) * UserService.USERS_PER_PAGE + 1;
 
+        // System.out.println(startCount);
+
         // edge case -> pageNum is invalid
-        if (startCount > page.getTotalElements()) {
-            throw new RuntimeException("Invalid page number, please check it again if it is less than the totalPages: " + page.getTotalPages());
-        }
+//        if (startCount > page.getTotalElements()) {
+//            throw new RuntimeException("Invalid page number, please check it again if it is less than the totalPages: " + page.getTotalPages());
+//        }
 
         long endCount = startCount + UserService.USERS_PER_PAGE - 1;
 
@@ -75,6 +77,7 @@ public class UserController {
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", reverseSortDir);
+        model.addAttribute("keyword", keyword);
         return "users";
     }
 
