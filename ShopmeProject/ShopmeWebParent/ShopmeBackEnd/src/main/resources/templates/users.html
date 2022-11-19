@@ -67,13 +67,13 @@
 
     <div>
         <h2>Manage Users</h2>
-        <a th:href="@{/users/new}">Create New User</a>
-        &nbsp;|&nbsp;
-        <a th:href="@{/users/export/csv}">Export to CSV</a>
-        &nbsp;|&nbsp;
-        <a th:href="@{/users/export/excel}">Export to Excel</a>
-        &nbsp;|&nbsp;
-        <a th:href="@{/users/export/pdf}">Export to PDF</a>
+        <a th:href="@{/users/new}" class="fas fa-user-plus fa-2x icon-dark mr-2" title="Create a new user"></a>
+
+        <a th:href="@{/users/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2" title="Export data to csv"></a>
+
+        <a th:href="@{/users/export/excel}" class="fas fa-file-excel fa-2x icon-dark mr-2" title="Export data to excel"></a>
+
+        <a th:href="@{/users/export/pdf}" class="fas fa-file-pdf fa-2x icon-dark" title="Export data to pdf"></a>
     </div>
 
     <!--小弹窗-->
@@ -90,136 +90,80 @@
             Filter:&nbsp;
             <input class="form-control" name="keyword" required th:value="${keyword}" type="search"/>
             &nbsp;&nbsp;
-            <input class="btn btn-primary" type="submit" value="Search"/>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+            </button>
             &nbsp;&nbsp;
-            <input class="btn btn-secondary" onclick="clearFilter()" type="button" value="Clear"/>
+            <button type="button" class="btn btn-secondary" onclick="clearFilter()">
+                <i class="fas fa-eraser"></i>
+            </button>
         </form>
     </div>
 
 
-    <div>
+    <div class="full-details">
         <table class="table table-bordered table-striped table-hover table-responsive-xl">
             <thead class="thead-dark">
             <tr>
-                <!--				<th>-->
-                <!--					&lt;!&ndash;-->
-                <!--						如果现在sort的不是id，那么点击此按钮的时候，default为的排序顺序是，目前的顺序-->
-                <!--						th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortDir}}" query语法-->
-                <!--					&ndash;&gt;-->
-                <!--					<a th:if="${sortField != 'id'}" class="text-white"-->
-                <!--					   th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">-->
-                <!--						User ID-->
-                <!--					</a>-->
-                <!--					<a th:if="${sortField == 'id'}" class="text-white"-->
-                <!--					   th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">-->
-                <!--						User ID-->
-                <!--					</a>-->
-
-                <!--					<span th:if="${sortField == 'id'}"-->
-                <!--						  th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}" ></span>-->
-
-                <!--				</th>-->
-                <th th:replace="fragments :: column_link('id', 'User ID')"/>
+                <th class="hideable-column">
+                    <th th:replace="fragments :: column_link('id', 'User ID', 'tag')" />
+                </th>
 
                 <th>Photos</th>
-                <!--				<th>-->
-                <!--					<a th:if="${sortField != 'email'}" class="text-white"-->
-                <!--					   th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">-->
-                <!--						E-mail-->
-                <!--					</a>-->
-                <!--					<a th:if="${sortField == 'email'}" class="text-white"-->
-                <!--					   th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">-->
-                <!--						E-mail-->
-                <!--					</a>-->
 
-                <!--					<span th:if="${sortField == 'email'}"-->
-                <!--						  th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}" ></span>-->
-                <!--				</th>-->
-                <th th:replace="fragments :: column_link('email', 'E-mail')"/>
-                <th th:replace="fragments :: column_link('firstName', 'First Name')"/>
-                <th th:replace="fragments :: column_link('lastName', 'Last Name')"/>
+                <th class="hideable-column">
+                    <th th:replace="fragments :: column_link('email', 'E-mail', 'tag')" />
+                </th>
 
-                <!--				<th>-->
-                <!--					<a th:if="${sortField != 'firstName'}" class="text-white"-->
-                <!--					   th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">-->
-                <!--						First Name-->
-                <!--					</a>-->
-                <!--					&lt;!&ndash;如果现在是ascending，再次点击则会反序&ndash;&gt;-->
-                <!--					<a th:if="${sortField == 'firstName'}" class="text-white"-->
-                <!--					   th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">-->
-                <!--						First Name-->
-                <!--					</a>-->
+                <th th:replace="fragments :: column_link('firstName', 'First Name', 'none')" />
 
-                <!--					<span th:if="${sortField == 'firstName'}"-->
-                <!--						  th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}" ></span>-->
-                <!--				</th>-->
+                <th th:replace="fragments :: column_link('lastName', 'Last Name', 'none')" />
 
-                <!--				<th>-->
-                <!--					<a th:if="${sortField != 'lastName'}" class="text-white"-->
-                <!--					   th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">-->
-                <!--						Last Name-->
-                <!--					</a>-->
-                <!--					<a th:if="${sortField == 'lastName'}" class="text-white"-->
-                <!--					   th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">-->
-                <!--						Last Name-->
-                <!--					</a>-->
-
-                <!--					<span th:if="${sortField == 'lastName'}"-->
-                <!--						  th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}" ></span>-->
-                <!--				</th>-->
                 <th>Roles</th>
-                <!--				<th>-->
-                <!--					<a th:if="${sortField != 'enabled'}" class="text-white"-->
-                <!--					   th:href="@{'/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">-->
-                <!--						Enabled-->
-                <!--					</a>-->
-                <!--					<a th:if="${sortField == 'enabled'}" class="text-white"-->
-                <!--					   th:href="@{'/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">-->
-                <!--						Enabled-->
-                <!--					</a>-->
 
-                <!--					<span th:if="${sortField == 'enabled'}"-->
-                <!--						  th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}" ></span>-->
-                <!--				</th>-->
-                <th th:replace="fragments :: column_link('enabled', 'Enabled')"/>
+                <th th:replace="fragments :: column_link('enabled', 'Enabled', 'none')" />
 
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="user : ${listUsers}">
-                <td>[[${user.id}]]</td>
+                <td class="hideable-column">[[${user.id}]]</td>
                 <td>
-                    <span class="fas fa-portrait fa-3x icon-silver" th:if="${user.photos == null}"></span>
-                    <img style="width: 100px" th:if="${user.photos != null}"
-                         th:src="@{${user.photosImagePath}}"/>
+                    <div th:replace="fragments :: user_photos" />
                 </td>
-                <td>[[${user.email}]]</td>
+                <td class="hideable-column">[[${user.email}]]</td>
                 <td>[[${user.firstName}]]</td>
                 <td>[[${user.lastName}]]</td>
                 <td>[[${user.roles}]]</td>
                 <!--thymeleaf if syntax-->
                 <td>
-                    <a class="fas fa-check-circle fa-2x icon-green" th:href="@{'/users/' + ${user.id} + '/enabled/false'}"
-                       th:if="${user.enabled == true}"
-                       title="Disable this user"></a>
-                    <a class="fas fa-circle fa-2x icon-gray" th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
-                       th:if="${user.enabled == false}"
-                       title="Enable this user"></a>
+                    <div th:replace="fragments :: user_status" />
                 </td>
                 <td>
-                    <a class="fa-solid fa-pen-to-square fa-2x icon-green" th:href="@{'/users/edit/' + ${user.id}}"
-                       title="Edit this user"></a>
-                    &nbsp;
-                    <a class="fa-solid fa-trash-can fa-2x icon-red link-delete"
-                       th:href="@{'/users/delete/' + ${user.id}}"
-                       th:userId="${user.id}"
-                       title="Delete this user">
-                    </a>
+                    <div th:replace="fragments :: user_actions" />
                 </td>
             </tr>
             </tbody>
         </table>
+    </div>
+
+    <div class="less-details">
+        <div th:each="user : ${listUsers}" class="row m-1">
+            <div class="col-4">
+                <div th:replace="fragments :: user_photos" />
+            </div>
+            <div class="col-8">
+                <div>[[${user.fullName}]]</div>
+                <div>[[${user.roles}]]</div>
+                <div class="mt-2">
+                    <div th:replace="fragments :: user_status" />
+                    &nbsp;
+                    <div th:replace="fragments :: user_actions" />
+                </div>
+            </div>
+            <div>&nbsp;</div>
+        </div>
     </div>
 
 
@@ -234,7 +178,7 @@
     <!--choose page-->
     <div th:if="${totalPages > 1}">
         <nav>
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center flex-wrap">
                 <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
                     <!--					<a class="page-link" th:href="@{'/users/page/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">First</a>-->
                     <a th:replace="fragments :: page_link(1, 'First')"></a>
