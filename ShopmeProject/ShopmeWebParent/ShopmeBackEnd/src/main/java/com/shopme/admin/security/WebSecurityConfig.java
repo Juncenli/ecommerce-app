@@ -53,7 +53,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .usernameParameter("email")
                 .permitAll()
-                .and().logout().permitAll();
+                .and().logout().permitAll()
+                .and()
+                .rememberMe()
+                .key("AbcDefgHijKlmnOpqrs_1234567890") // cookies will survive if restarted
+                .tokenValiditySeconds(7 * 24 * 60 * 60); // expiration time: 7 days
+
+        // It’s because by default, Spring Security supplies a random key at application’s startup.
+        // So if you fix the key, remember-me cookies are still valid until expire.
+        // Once we log out, the cookie will be cleared.
     }
 
     @Override
