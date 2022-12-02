@@ -16,8 +16,12 @@
     </div>
 
     <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto">
-        <div th:if="${param.error}">
+        <div th:if="${param.error}"> <!--http://localhost:8080/ShopmeAdmin/login?error-->
             <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+        </div>
+
+        <div th:if="${param.logout}"> <!--http://localhost:8080/ShopmeAdmin/login?logout-->
+            <p class="text-warning">You have been logged out.</p>
         </div>
 
         <div class="border border-secondary rounded p-3">
@@ -31,6 +35,21 @@
             <p>
                 <input type="submit" value="Login" class="btn btn-primary" />
             </p>
+            <!--
+                   Q: How it works when we click login button?
+                      And how will we compare the email with the password, then enter the index page?
+
+                   A: The details of login process is done by Spring Security ,and we don't have to care about that.
+                      We just create the login page, declare UserDetails and UserDetailService classes, and configure security.
+
+                   Q: So th:action="{/login}" is this mandatory? why /login, can change to other or method="post" change to get?
+
+                       th:action 用于定义后台控制器的路径，表单的提交地址，相当于<form>标签的action属性
+
+                   A: Yes, The viewLoginPage() handles GET request /login, which shows the login page.
+                       When you click Login button, it will send POST request /login to the server, which will be processed by Spring Security.
+                       Same path /login but different HTTP methods (GET and POST).
+            -->
         </div>
     </form>
 

@@ -8,6 +8,7 @@ public class MainController {
 	// test
 	@GetMapping("")
 	public String viewHomePage() {
+
 		return "index";
 	}
 
