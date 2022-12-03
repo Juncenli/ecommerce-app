@@ -13,8 +13,24 @@ View(Thymeleaf, HTML) <----> Controller(MVC, REST) <----> Service(business class
 
 - Refactor code in users.html(URLs in table header and pagination)
 
+## User Authentication
+Using correct email and password to login.
+
 ## Code Refactor 2
 - Create Thymeleaf fragments for page's head, navigation menu and footer
 - Move common Javascript code to common.js  
 
 Reduce code duplication, increase code readability and maintainability 
+
+## User Authorization
+Different roles have different functionalities.
+
+## User Authorization: Access Rights Table
+
+![table](README_pics/authorities.jpeg)
+
+```html
+<li class="nav-item" sec:authorize="hasAuthority('Admin')">
+    <a class="nav-link" th:href="@{/users}">Users</a>
+</li>
+```
