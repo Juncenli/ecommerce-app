@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="fragments :: page_head('Error - Shopme Admin')"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div th:replace="navigation :: menu"></div>
+    <div class="m-3">
+        <h2>Sorry, an unexpected error has occurred</h2>
+    </div>
+
+    <div th:replace="fragments :: footer"></div>
+
+</div>
+</body>
+</html>
+
+<!--
+    The error.html page will be displayed for error codes that are not listed in the error folder
+    It is for general error message. The pages in error folder is for specific codes like 404, 403, 500, etc.
+-->

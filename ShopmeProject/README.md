@@ -40,3 +40,17 @@ Different roles have different functionalities.
 - Organize some Java packages(user export and user controllers)
 - Organize some HTML pages(user module)
 - Move some common Javascript code to a sepatate JS file
+
+## Show Custom Error Pages
+
+- To show user-friendly error messages instead of default technical ones
+- Make UI of error pages match UI of the application
+- Handle HTTP error codes: 403, 404, and 500
+  403: Sorry, you don;t have permission to access this page
+  404: Sorry, the requested page could not be found
+  500: Sorry, the server has encountered an error while processing your request
+
+- General custom error page
+  Sorry, an unexpected error has occurred 
+
+We don't have to write code or configure for handle the error URL, as it is convention defined by Spring: Just put the error pages in the right folder with the right names, it will work. So developers could focus on business logics, not wasting much time for configuration.
