@@ -34,3 +34,9 @@ Different roles have different functionalities.
     <a class="nav-link" th:href="@{/users}">Users</a>
 </li>
 ```
+
+## Code Refactor 3
+
+- Organize some Java packages(user export and user controllers)
+- Organize some HTML pages(user module)
+- Move some common Javascript code to a sepatate JS file
