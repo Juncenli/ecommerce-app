@@ -54,3 +54,7 @@ Different roles have different functionalities.
   Sorry, an unexpected error has occurred 
 
 We don't have to write code or configure for handle the error URL, as it is convention defined by Spring: Just put the error pages in the right folder with the right names, it will work. So developers could focus on business logics, not wasting much time for configuration.
+
+## Category Module
+
+![category](README_pics/categoryModule.jpeg)
