@@ -29,6 +29,25 @@ public class Category {
     @OneToMany(mappedBy = "parent")
     private Set<Category> children = new HashSet<>(); // children(mappedBy = "parent") -> many categories
 
+    public Category() {
+    }
+
+    public Category(Integer id) {
+        this.id = id;
+    }
+
+    public Category(String name) {
+        this.name = name;
+        alias = name;
+        image = "default.png";
+    }
+
+    public Category(String name, Category parent) {
+        this(name);
+        //this.name = name;
+        this.parent = parent;
+    }
+
     public Integer getId() {
         return id;
     }
