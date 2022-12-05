@@ -43,8 +43,16 @@ public class Category {
     }
 
     public Category(String name, Category parent) {
-        this(name);
-        //this.name = name;
+        /*
+            it will execute another constructor
+
+               public Category(String name) {
+                    this.name = name;
+                    alias = name;
+                    image = "default.png";
+               }
+         */
+        this(name); // execute the constructor having same parameter type
         this.parent = parent;
     }
 

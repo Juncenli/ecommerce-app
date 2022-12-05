@@ -49,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // To deny access for users who are not admin to access the user module
                 .antMatchers("/users/**").hasAuthority("Admin")
+                .antMatchers("/categories/**").hasAnyAuthority("Admin", "Editor")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
