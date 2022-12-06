@@ -61,11 +61,11 @@
           <input type="hidden" th:field="*{image}" />
           <!--choose file button-->
           <input type="file" id="fileImage" name="fileImage" accept="image/png, image/jpeg"
-                 required
+                 th:required="${category.imagePath == null}"
                  class="mb-2" />
 
           <div class="mt-2">
-            <img id="thumbnail" alt="Image preview" th:src="@{/images/image-thumbnail.png}"
+            <img id="thumbnail" alt="Image preview" th:src="@{${category.imagePath}}"
                  class="img-fluid" />
           </div>
         </div>
