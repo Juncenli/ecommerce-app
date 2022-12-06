@@ -126,4 +126,33 @@ public class Category {
 
         return copyCategory;
     }
+
+    /*
+        Because by default, the entity objects returned by a repository are managed objects (or persistent objects) in Hibernate session.
+        Every change made to persistent objects will eventually update to database.
+        In our case, we need to insert "-" characters in category name, without affecting the actual name in database.
+        That's why we need to do that on new objects that are not managed.
+     */
+    public static Category copyFull(Category category) {
+        Category copyCategory = new Category();
+        copyCategory.setId(category.getId());
+        copyCategory.setName(category.getName());
+        copyCategory.setImage(category.getImage());
+        copyCategory.setAlias(category.getAlias());
+        copyCategory.setEnabled(category.isEnabled());
+
+        return copyCategory;
+    }
+
+    public static Category copyFull(Category category, String name) {
+        Category copyCategory = Category.copyFull(category);
+        copyCategory.setName(name);
+
+        return copyCategory;
+    }
+
+    @Transient
+    public String getImagePath() {
+        return "/category-images/" + this.id + "/" + this.image;
+    }
 }
