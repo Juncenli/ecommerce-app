@@ -52,8 +52,15 @@ public class Category {
                     image = "default.png";
                }
          */
-        this(name); // execute the constructor having same parameter type
+        this(name); // execute the constructor having same parameter type, 调用具有相同形参的构造方法
         this.parent = parent;
+    }
+
+    public Category(Integer id, String name, String alias) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.alias = alias;
     }
 
     public Integer getId() {

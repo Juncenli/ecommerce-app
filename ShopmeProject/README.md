@@ -9,23 +9,23 @@ Common Part: Common Code; Common Dependencies
 View(Thymeleaf, HTML) <----> Controller(MVC, REST) <----> Service(business class) <----> Repository(Entities & Interfaces) <----> Spring Data JPA <----> Hibernate framework <----> JDBC Driver <---> Database
 
 
-## Code Refactor 1
+# Code Refactor 1
 
 - Refactor code in users.html(URLs in table header and pagination)
 
-## User Authentication
+# User Authentication
 Using correct email and password to login.
 
-## Code Refactor 2
+# Code Refactor 2
 - Create Thymeleaf fragments for page's head, navigation menu and footer
 - Move common Javascript code to common.js  
 
 Reduce code duplication, increase code readability and maintainability 
 
-## User Authorization
+# User Authorization
 Different roles have different functionalities.
 
-## User Authorization: Access Rights Table
+# User Authorization: Access Rights Table
 
 ![table](README_pics/authorities.jpeg)
 
@@ -35,13 +35,13 @@ Different roles have different functionalities.
 </li>
 ```
 
-## Code Refactor 3
+# Code Refactor 3
 
 - Organize some Java packages(user export and user controllers)
 - Organize some HTML pages(user module)
 - Move some common Javascript code to a sepatate JS file
 
-## Show Custom Error Pages
+# Show Custom Error Pages
 
 - To show user-friendly error messages instead of default technical ones
 - Make UI of error pages match UI of the application
@@ -55,6 +55,30 @@ Different roles have different functionalities.
 
 We don't have to write code or configure for handle the error URL, as it is convention defined by Spring: Just put the error pages in the right folder with the right names, it will work. So developers could focus on business logics, not wasting much time for configuration.
 
-## Category Module
+# Category Module
 
 ![category](README_pics/categoryModule.jpeg)
+
+# Check Uniqueness of Category
+
+![CategoryUniqueness](README_pics/checkUniquenessOfCategory.png)
+
+## Why we need to mock a class when we do a unit test?
+
+Mocking technique is primarily used during testing, as it allows us to take out certain aspects of the tested system, 
+thus narrowing the test's focus and decreasing the test's complexity.
+
+## Mockito
+Mockito is an open-source testing framework used for unit testing of Java applications. 
+It plays a vital role in developing testable applications. 
+Mockito is used to mock interfaces so that a dummy functionality can be added to a mock interface that can be used in Unit Testing. 
+Unit Testing is a type of software testing in which individual components of the software are tested.
+The major objective of using the Mockito framework is to simplify the development of a test by mocking external dependencies and using them in the test code. 
+And as a result, Mockito provides a simpler test code that is easier to understand, more readable, and modifiable. 
+Mockito can also be used with other testing frameworks like JUnit and TestNG. 
+JUnit framework is a Java framework that is also used for testing. 
+Now, JUnit is used as a standard when there is a need to perform testing in Java
+
+Because we just want to test the service layer, not the repository layer, that's why we use a mockito that allows us to get a fake for the area we don't want to 
+
+![ERD](README_pics/mockitoERD.png)
