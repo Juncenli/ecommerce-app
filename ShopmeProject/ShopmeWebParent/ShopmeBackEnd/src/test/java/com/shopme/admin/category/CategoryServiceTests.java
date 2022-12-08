@@ -30,8 +30,8 @@ public class CategoryServiceTests {
 
         Category category = new Category(id, name, alias);
         /*
-
-
+            Mocking repository is needed when you want to test the service layer only, suppose that the repository layer is working properly.
+            That's the purpose of mocking.
          */
         Mockito.when(repo.findByName(name)).thenReturn(category);
         Mockito.when(repo.findByAlias(alias)).thenReturn(null);
