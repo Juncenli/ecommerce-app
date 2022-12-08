@@ -83,3 +83,6 @@ Because we just want to test the service layer, not the repository layer, that's
 
 ![ERD](README_pics/mockitoERD.png)
 
+# Delete Category Function
+
+Only the category which has no children can be deleted
