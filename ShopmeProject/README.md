@@ -82,3 +82,4 @@ Now, JUnit is used as a standard when there is a need to perform testing in Java
 Because we just want to test the service layer, not the repository layer, that's why we use a mockito that allows us to get a fake for the area we don't want to 
 
 ![ERD](README_pics/mockitoERD.png)
+
