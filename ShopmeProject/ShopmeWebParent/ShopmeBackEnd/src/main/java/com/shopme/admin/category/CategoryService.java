@@ -1,21 +1,33 @@
 package com.shopme.admin.category;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.shopme.common.entity.Category;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 public class CategoryService {
+    private static final int ROOT_CATEGORIES_PER_PAGE = 4;
+
     @Autowired
     private CategoryRepository repo;
 
-    public List<Category> listAll(String sortDir) {
+    public List<Category> listByPage(CategoryPageInfo pageInfo, int pageNum, String sortDir) {
         Sort sort = Sort.by("name");
 
         if (sortDir.equals("asc")) {
@@ -24,7 +36,13 @@ public class CategoryService {
             sort = sort.descending();
         }
 
-        List<Category> rootCategories = repo.findRootCategories(sort);
+        Pageable pageable = PageRequest.of(pageNum - 1, ROOT_CATEGORIES_PER_PAGE, sort);
+
+        Page<Category> pageCategories = repo.findRootCategories(pageable);
+        List<Category> rootCategories = pageCategories.getContent();
+
+        pageInfo.setTotalElements(pageCategories.getTotalElements());
+        pageInfo.setTotalPages(pageCategories.getTotalPages());
 
         return listHierarchicalCategories(rootCategories, sortDir);
     }
@@ -36,7 +54,6 @@ public class CategoryService {
             hierarchicalCategories.add(Category.copyFull(rootCategory));
 
             Set<Category> children = sortSubCategories(rootCategory.getChildren(), sortDir);
-
 
             for (Category subCategory : children) {
                 String name = "--" + subCategory.getName();
@@ -65,11 +82,13 @@ public class CategoryService {
 
             listSubHierarchicalCategories(hierarchicalCategories, subCategory, newSubLevel, sortDir);
         }
+
     }
 
     public Category save(Category category) {
         return repo.save(category);
     }
+
     public List<Category> listCategoriesUsedInForm() {
         List<Category> categoriesUsedInForm = new ArrayList<>();
 
@@ -91,10 +110,10 @@ public class CategoryService {
         return categoriesUsedInForm;
     }
 
-    private void listSubCategoriesUsedInForm(List<Category> categoriesUsedInForm, Category parent, int subLevel) {
+    private void listSubCategoriesUsedInForm(List<Category> categoriesUsedInForm,
+                                             Category parent, int subLevel) {
         int newSubLevel = subLevel + 1;
         Set<Category> children = sortSubCategories(parent.getChildren());
-
 
         for (Category subCategory : children) {
             String name = "";
@@ -167,7 +186,6 @@ public class CategoryService {
         return sortedChildren;
     }
 
-
     public void updateCategoryEnabledStatus(Integer id, boolean enabled) {
         repo.updateEnabledStatus(id, enabled);
     }
@@ -180,5 +198,4 @@ public class CategoryService {
 
         repo.deleteById(id);
     }
-
 }
