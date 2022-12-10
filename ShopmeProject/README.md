@@ -86,3 +86,9 @@ Because we just want to test the service layer, not the repository layer, that's
 # Delete Category Function
 
 Only the category which has no children can be deleted
+
+# Code Brand Module
+
+![BrandInfo](README_pics/BrandInformation.jpg)
+
+![BrandModuleERD](README_pics/BrandModuleERD.jpg)
