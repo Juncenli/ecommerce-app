@@ -50,8 +50,8 @@ public class UserController {
 //        if (pageNum < 0) {
 //            throw new RuntimeException("Invalid page number, please check it again if it is more than 0");
 //        }
-         System.out.println("Sort Field: " + sortField);
-         System.out.println("Sort Order: " + sortDir);
+//         System.out.println("Sort Field: " + sortField);
+//         System.out.println("Sort Order: " + sortDir);
         Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyword);
         List<User> listUsers = page.getContent();
         long startCount = (pageNum - 1) * UserService.USERS_PER_PAGE + 1;
