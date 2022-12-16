@@ -1,5 +1,7 @@
 package com.shopme.common.entity;
 
+import com.shopme.common.Constants;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -125,8 +127,8 @@ public class User {
     @Transient
     public String getPhotosImagePath() {
         if (id == null || photos == null) return "/images/default-user.png";
-
-        return "/user-photos/" + this.id + "/" + this.photos;
+        // using Amazon S3
+        return Constants.S3_BASE_URI +  "/user-photos/" + this.id + "/" + this.photos;
     }
 
     @Transient
