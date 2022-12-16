@@ -9,14 +9,9 @@ public class Constants {
     static {
         String bucketName = System.getenv("AWS_BUCKET_NAME");
         String region = System.getenv("AWS_REGION");
-        // https://shopme-files.s3.amazonaws.com
-        String patternWithoutRegion = "https://%s.s3.amazonaws.com";
+        // https://shopme-files.s3.us-east-1.amazonaws.com/
         String patternWithRegion = "https://%s.s3.%s.amazonaws.com";
-        if (region.equals("empty")) {
-            S3_BASE_URI = bucketName == null ? "" : String.format(patternWithoutRegion, bucketName);
-        } else {
-            S3_BASE_URI = bucketName == null ? "" : String.format(patternWithRegion, bucketName, region);
-        }
+        S3_BASE_URI = bucketName == null ? "" : String.format(patternWithRegion, bucketName, region);
     }
 
 //    public static void main(String[] args) {

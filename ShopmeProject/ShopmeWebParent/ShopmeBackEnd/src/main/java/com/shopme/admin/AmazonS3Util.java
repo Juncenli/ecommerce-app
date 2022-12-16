@@ -25,6 +25,8 @@ public class AmazonS3Util {
         BUCKET_NAME = System.getenv("AWS_BUCKET_NAME");
     }
 
+
+
     public static List<String> listFolder(String folderName) {
         S3Client client = S3Client.builder().build();
         ListObjectsRequest listRequest = ListObjectsRequest.builder()

@@ -11,16 +11,18 @@ public class AmazonS3UtilTests {
 
     @Test
     public void testListFolder() {
-        String folderName = "test-upload";
+        String folderName = "user-photos/26";
         List<String> listKeys = AmazonS3Util.listFolder(folderName);
         listKeys.forEach(System.out::println);
     }
 
     @Test
     public void testUploadFile() throws FileNotFoundException {
+        // the folder name in s3
         String folderName = "test-upload";
-        String fileName = "JAX-WS-Tomcat.zip";
-        String filePath = "E:\\Test\\" + fileName;
+        // the file which we want to upload
+        String fileName = "1_0.jpg";
+        String filePath = "/Users/juncenli/Desktop/results/gan_output/Van-Gogh-The-Starry-Night/" + fileName;
 
         InputStream inputStream = new FileInputStream(filePath);
 
@@ -29,7 +31,7 @@ public class AmazonS3UtilTests {
 
     @Test
     public void testDeleteFile() {
-        String fileName = "test-upload/JAX-WS-Tomcat.zip";
+        String fileName = "test-upload/0_0.jpg";
         AmazonS3Util.deleteFile(fileName);
     }
 
