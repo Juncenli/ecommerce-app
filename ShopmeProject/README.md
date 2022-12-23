@@ -8,6 +8,7 @@ Common Part: Common Code; Common Dependencies
 
 View(Thymeleaf, HTML) <----> Controller(MVC, REST) <----> Service(business class) <----> Repository(Entities & Interfaces) <----> Spring Data JPA <----> Hibernate framework <----> JDBC Driver <---> Database
 
+![App_Architecture](README_pics/Application Architechture.png)
 
 # Code Refactor 1
 
