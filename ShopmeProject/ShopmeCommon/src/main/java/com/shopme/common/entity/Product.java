@@ -251,4 +251,16 @@ public class Product {
         this.images.add(new ProductImage(imageName, this));
     }
 
+    /*
+        @Transient annotation is used to mark a field to be transient for the mapping framework,
+        which means the field marked with @Transient is ignored by mapping framework and the field not mapped to any database column (in RDBMS) or Document property (in NOSQL).
+        Thus, the property will not be persisted to data store.
+     */
+    @Transient
+    public String getMainImagePath() {
+        if (id == null || mainImage == null) return "/images/image-thumbnail.png";
+
+        return "/product-images/" + this.id + "/" + this.mainImage;
+    }
+
 }

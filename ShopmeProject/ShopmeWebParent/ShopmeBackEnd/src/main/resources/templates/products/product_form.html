@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <head th:replace="fragments :: page_head(${pageTitle}, 'tag')"/>
-    <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}"/>
+    <head th:replace="fragments :: page_head(${pageTitle}, 'tag')" />
+    <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}" />
     <script th:src="@{/richtext/jquery.richtext.min.js}"></script>
 </head>
 <body>
@@ -13,8 +13,9 @@
     </div>
 
     <form th:action="@{/products/save}" method="post" onsubmit="return checkUnique(this)"
+          enctype="multipart/form-data"
           th:object="${product}">
-        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{id}" />
         <div>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
@@ -41,7 +42,9 @@
                 <div class="tab-pane" id="description" role="tabpanel">
                     <div th:replace="products/product_description :: content"></div>
                 </div>
-                <div class="tab-pane" id="images" role="tabpanel">Images</div>
+                <div class="tab-pane" id="images" role="tabpanel">
+                    <div th:replace="products/product_images :: content"></div>
+                </div>
                 <div class="tab-pane" id="details" role="tabpanel">Details</div>
                 <div class="tab-pane p-3" id="shipping" role="tabpanel">
                     <div th:replace="products/product_shipping :: content"></div>
@@ -49,8 +52,8 @@
             </div>
         </div>
         <div class="text-center">
-            <input type="submit" value="Save" class="btn btn-primary m-3"/>
-            <input type="button" value="Cancel" class="btn btn-secondary" id="buttonCancel"/>
+            <input type="submit" value="Save" class="btn btn-primary m-3" />
+            <input type="button" value="Cancel" class="btn btn-secondary" id="buttonCancel" />
         </div>
     </form>
 
@@ -60,18 +63,20 @@
 
 </div>
 <script type="text/javascript">
+    MAX_FILE_SIZE = 502400; // 500KB
+
     moduleURL = "[[@{/products}]]";
     brandModuleURL = "[[@{/brands}]]";
 
     dropdownBrands = $("#brand");
     dropdownCategories = $("#category");
 
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         $("#shortDescription").richText();
         $("#fullDescription").richText();
 
-        dropdownBrands.change(function () {
+        dropdownBrands.change(function() {
             dropdownCategories.empty();
             getCategories();
         });
@@ -84,8 +89,8 @@
         brandId = dropdownBrands.val();
         url = brandModuleURL + "/" + brandId + "/categories";
 
-        $.get(url, function (responseJson) {
-            $.each(responseJson, function (index, category) {
+        $.get(url, function(responseJson) {
+            $.each(responseJson, function(index, category) {
                 $("<option>").val(category.id).text(category.name).appendTo(dropdownCategories);
             });
         });
@@ -101,7 +106,7 @@
 
         params = {id: productId, name: productName, _csrf: csrfValue};
 
-        $.post(url, params, function (response) {
+        $.post(url, params, function(response) {
             if (response == "OK") {
                 form.submit();
             } else if (response == "Duplicate") {
@@ -110,7 +115,7 @@
                 showErrorModal("Unknown response from server");
             }
 
-        }).fail(function () {
+        }).fail(function() {
             showErrorModal("Could not connect to the server");
         });
 
