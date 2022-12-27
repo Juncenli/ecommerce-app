@@ -93,3 +93,7 @@ Only the category which has no children can be deleted
 ![BrandInfo](README_pics/BrandInformation.jpg)
 
 ![BrandModuleERD](README_pics/BrandModuleERD.jpg)
+
+# Code Authorization for Product Module
+
+![AuthorizationProductModule](README_pics/CodeAuthorizationModule.jpg)

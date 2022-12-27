@@ -1,11 +1,20 @@
 package com.shopme.common.entity;
 
-import com.shopme.common.Constants;
-
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "users")
@@ -127,8 +136,8 @@ public class User {
     @Transient
     public String getPhotosImagePath() {
         if (id == null || photos == null) return "/images/default-user.png";
-        // using Amazon S3
-        return Constants.S3_BASE_URI +  "/user-photos/" + this.id + "/" + this.photos;
+
+        return "/user-photos/" + this.id + "/" + this.photos;
     }
 
     @Transient
@@ -136,5 +145,16 @@ public class User {
         return firstName + " " + lastName;
     }
 
+    public boolean hasRole(String roleName) {
+        Iterator<Role> iterator = roles.iterator();
 
+        while (iterator.hasNext()) {
+            Role role = iterator.next();
+            if (role.getName().equals(roleName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
