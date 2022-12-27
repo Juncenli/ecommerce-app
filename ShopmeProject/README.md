@@ -97,3 +97,30 @@ Only the category which has no children can be deleted
 # Code Authorization for Product Module
 
 ![AuthorizationProductModule](README_pics/CodeAuthorizationModule.jpg)
+
+# KeyNotes 6:
+
+- Map a bidirectional one-to-many entity relationship (Product and ProductImage) using @OneToMany, @ManyToOne and @JoinColumn
+- cascade = CascadeType.ALL -> all changes to parent (Product) will update children (ProductImage)
+- orphanRemoval = true -> delete children that are on longer referenced by the parent
+
+## jQuery 
+
+Change HTML document dynamically
+ 
+- element.append(htmlCode) -> append HTML code to an element
+- element.remove() -> delete the element from document tree
+
+## Database design
+
+- Add new colum all_parent_ids to categoriesTable -> make it easy for searching products in a category and its sub categories.
+
+## Thymeleaf
+
+Use boolean expression for HTML attributes:
+- th:selected="${expression}"
+- th:readonly="${expression}"
+- th:disabled="${expression}"
+
+Expression for authorization
+- ${#authorization.expression('hasAuthority("Salesperson")')}
