@@ -1,15 +1,6 @@
 package com.shopme.admin.category;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import javax.transaction.Transactional;
-
+import com.shopme.common.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.shopme.common.entity.Category;
+import javax.transaction.Transactional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -104,6 +96,12 @@ public class CategoryService {
     }
 
     public Category save(Category category) {
+        Category parent = category.getParent();
+        if (parent != null) {
+            String allParentIds = parent.getAllParentIDs() == null ? "-" : parent.getAllParentIDs();
+            allParentIds += String.valueOf(parent.getId()) + "-";
+            category.setAllParentIDs(allParentIds);
+        }
         return repo.save(category);
     }
 
