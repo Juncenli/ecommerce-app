@@ -1,5 +1,7 @@
 package com.shopme.common.entity;
 
+import com.shopme.common.Constants;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -262,7 +264,7 @@ public class Product {
     public String getMainImagePath() {
         if (id == null || mainImage == null) return "/images/image-thumbnail.png";
 
-        return "/product-images/" + this.id + "/" + this.mainImage;
+        return Constants.S3_BASE_URI +"/product-images/" + this.id + "/" + this.mainImage;
     }
 
 
@@ -301,5 +303,14 @@ public class Product {
             return name.substring(0, 70).concat("...");
         }
         return name;
+    }
+
+    @Transient
+    public String getDiscountPrice() {
+        if (discountPercent > 0) {
+            return String.format("%.2f", price * ((100 - discountPercent) / 100));
+        }
+        // 固定two decimal place
+        return String.format("%.2f", price);
     }
 }

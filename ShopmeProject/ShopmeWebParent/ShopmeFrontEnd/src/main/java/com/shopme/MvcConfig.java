@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+// 用了aws s3之后就不需要这个配置了
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
@@ -21,10 +22,11 @@ public class MvcConfig implements WebMvcConfigurer {
         Path path = Paths.get(pathPattern);
         String absolutePath = path.toFile().getAbsolutePath();
 
+        // 如果有 .. 则需要把..去除， 所以使用了replace method
         String logicalPath = pathPattern.replace("../", "") + "/**";
 
         registry.addResourceHandler(logicalPath)
-                .addResourceLocations("file:/" + absolutePath + "/");
+                .addResourceLocations("file:" + absolutePath + "/");
     }
-
 }
+
