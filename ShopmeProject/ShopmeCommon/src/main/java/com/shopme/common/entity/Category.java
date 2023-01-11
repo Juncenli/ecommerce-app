@@ -32,6 +32,7 @@ public class Category {
     private Category parent; // one parent -> one Category
 
     @OneToMany(mappedBy = "parent")
+    @OrderBy("name asc")
     private Set<Category> children = new HashSet<>(); // children(mappedBy = "parent") -> many categories
 
     public Category() {
