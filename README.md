@@ -124,3 +124,13 @@ Use boolean expression for HTML attributes:
 
 Expression for authorization
 - ${#authorization.expression('hasAuthority("Salesperson")')}
+
+# KeyNotes 7:
+
+- Use alias in URL instead of item ID -> /c/desktop_computers instead of /category?id=23 -> URLs are more meaningful for visitors
+- Create breadcrumb navigation using <nav> and breadcrumb and breadcrumb-item
+- Code images slideshow using carousel component in Bootstrap
+- Display raw HTML code using th:utext (unescaped text)
+- Use Thymeleaf fragments quite a lot -> Reused
+- Full Text Search produces result more relevant than Like search
+- Full Text Search Query in MySQL -> SELECT * FROM products WHERE MATCH (name, description) AGAINST 'keyword'
