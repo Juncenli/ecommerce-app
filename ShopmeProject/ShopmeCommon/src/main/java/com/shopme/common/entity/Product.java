@@ -306,11 +306,10 @@ public class Product {
     }
 
     @Transient
-    public String getDiscountPrice() {
+    public float getDiscountPrice() {
         if (discountPercent > 0) {
-            return String.format("%.2f", price * ((100 - discountPercent) / 100));
+            return price * ((100 - discountPercent) / 100);
         }
-        // 固定two decimal place
-        return String.format("%.2f", price);
+        return this.price;
     }
 }
