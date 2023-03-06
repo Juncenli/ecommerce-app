@@ -134,3 +134,4 @@ Expression for authorization
 - Use Thymeleaf fragments quite a lot -> Reused
 - Full Text Search produces result more relevant than Like search
 - Full Text Search Query in MySQL -> SELECT * FROM products WHERE MATCH (name, description) AGAINST 'keyword'
+
