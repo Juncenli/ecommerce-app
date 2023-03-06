@@ -135,3 +135,23 @@ Expression for authorization
 - Full Text Search produces result more relevant than Like search
 - Full Text Search Query in MySQL -> SELECT * FROM products WHERE MATCH (name, description) AGAINST 'keyword'
 
+
+
+# KeyNotes 8:
+
+
+## Email-based Verification for Customer Registration:
+- Ensure only real human is registered - not automated bots
+- Verification code is generated using `RandomString.make()` method provided by Byte Buddy libarary.
+
+## Sending E-mail in Spring Boot:
+- Spring Boot Mail is based on Jakarta Mail(Standard mail library in Java EE)
+- Key APIs: JavaMailSender, JavaMailSenderImpl, MimeMessage, MimeMessageHelper
+- SMTP (Simple Mail Transfer Protocol) settings are configurable in Settings module
+- GMail's SMTP: use app password for Mail instead of Google account's password
+
+
+1. Use `datalist` for Editable dropdown list in HTML
+2. Validate form programmatically -> form.checkValidity();
+
+# KeyNotes 9:
